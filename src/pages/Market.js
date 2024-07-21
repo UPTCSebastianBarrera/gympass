@@ -18,6 +18,7 @@ const mockSupplementsData = [
 const Market = () => {
   const [supplements, setSupplements] = useState([]);
   const [selectedSupplement, setSelectedSupplement] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     // Simulate fetching data from backend
@@ -32,6 +33,10 @@ const Market = () => {
     setSelectedSupplement(null);
   };
 
+  const filteredSupplements = supplements.filter(supplement =>
+    supplement.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="market-page">
       <div className="market-header">
@@ -39,7 +44,13 @@ const Market = () => {
         <h2 className="user-name">Pedro</h2>
       </div>
       <div className="search-bar">
-        <input className="search-input" type="text" placeholder="Search supplements..." />
+        <input
+          className="search-input"
+          type="text"
+          placeholder="Search supplements..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
         <div className="tags">
           <button className="tag-button">Proteina</button>
           <button className="tag-button">Pre entreno</button>
@@ -48,7 +59,7 @@ const Market = () => {
         </div>
       </div>
       <div className={`supplements-grid ${selectedSupplement ? 'blurred' : ''}`}>
-        {supplements.map((supplement) => (
+        {filteredSupplements.map((supplement) => (
           <div className="supplement-item" key={supplement.id} onClick={() => handleSupplementClick(supplement)}>
             <img className="supplement-photo" src={supplement.image} alt={supplement.name} />
             <h3 className="supplement-name">{supplement.name}</h3>
