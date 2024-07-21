@@ -1,0 +1,72 @@
+/* src/styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #f8f8f8;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: black;
+}
+
+.navbar a.active {
+    color: red;
+}
+
+.login, .map, .market {
+    padding: 20px;
+    margin-top: 50px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.search-bar input, .basic-info input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.tags button {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+}
+
+.map-container, .products-grid {
+    margin-top: 20px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}

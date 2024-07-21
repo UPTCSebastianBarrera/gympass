@@ -1,0 +1,49 @@
+/* src/pages/Market.css */
+.market-page {
+    padding: 20px;
+  }
+  
+  .market-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .market-header img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .tags {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .tags button {
+    padding: 10px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .supplements-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  

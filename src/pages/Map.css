@@ -1,0 +1,43 @@
+/* src/pages/Map.css */
+.map-page {
+    padding: 20px;
+  }
+  
+  .map-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .map-header img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  .tags {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .tags button {
+    padding: 10px;
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
