@@ -1,0 +1,19 @@
+/* src/AspectRatio.css */
+.aspect-ratio-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f0f0f0; /* Optional: Set a background color for the container */
+  }
+  
+  .aspect-ratio-content {
+    width: 100%;
+    max-width: 480px; /* For a 9:16 aspect ratio on mobile devices */
+    aspect-ratio: 9 / 16;
+    background-color: #fff; /* Optional: Set a background color for the content */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow to the content */
+    overflow: hidden; /* Ensure content does not overflow */
+  }
+  

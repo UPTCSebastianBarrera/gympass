@@ -6,14 +6,14 @@ const Map = () => {
   return (
     <div className="map-page">
       <div className="map-header">
-        <img src="profile-pic-url" alt="Profile" />
-        <div>
-          <h2>Pedro</h2>
-          <p>Cll 4a Sur #15</p>
+          <img className="user-photo" src="https://via.placeholder.com/50" alt="Profile" />
+          <h2 className="user-name">Pedro</h2>
+        <div className="user-location">
+          <p className="location-text">Cll 4a Sur #15</p>
         </div>
       </div>
       <div className="search-bar">
-        <input type="text" placeholder="Search gyms..." />
+        <input type="text" placeholder="Buscar gimnasio ..." />
         <div className="tags">
           <button>Crossfit</button>
           <button>24 hr</button>

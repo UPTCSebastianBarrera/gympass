@@ -1,28 +1,72 @@
 /* src/pages/Login.css */
 .login-page {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .login-page form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .login-page input {
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  .login-page button {
-    padding: 10px;
-    background-color: #ff4081;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-photo {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.user-address {
+  margin: 0;
+  font-size: 14px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.login-button,
+.register-button,
+.logout-button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #FD8D8D;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.register-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.register-header input {
+  margin-left: 10px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
