@@ -1,5 +1,5 @@
 // src/pages/Login.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Login.css';
 
@@ -12,7 +12,16 @@ const Login = () => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
-  const [profilePic, setProfilePic] = useState('https://via.placeholder.com/50');
+  const [profilePic, setProfilePic] = useState(null);
+  const [profilePicPreview, setProfilePicPreview] = useState('https://via.placeholder.com/50');
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem('userData');
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const handleRegisterClick = () => {
     setIsRegistering(true);
@@ -25,9 +34,10 @@ const Login = () => {
         emailOrName,
         password,
       });
-      console.log(response.data); // Log the response data
-      setUserData(response.data);
+      const data = response.data;
+      setUserData(data);
       setIsLoggedIn(true);
+      localStorage.setItem('userData', JSON.stringify(data)); // Store user data in local storage
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message); // Log the error
       alert('Invalid email/name or password');
@@ -39,6 +49,19 @@ const Login = () => {
     setEmailOrName('');
     setPassword('');
     setUserData({});
+    localStorage.removeItem('userData'); // Clear user data from local storage
+  };
+
+  const handleProfilePicChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfilePic(reader.result);
+        setProfilePicPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleRegisterSubmit = async (e) => {
@@ -50,11 +73,14 @@ const Login = () => {
         password,
         address,
         phone,
-        profilePicture: profilePic
+        profilePicture: profilePic,
       });
-      console.log(response.data); // Log the response
+      const data = response.data;
       if (response.status === 201) {
         alert('User registered successfully!');
+        localStorage.setItem('userData', JSON.stringify(data)); // Store user data in local storage after registration
+        setUserData(data);
+        setIsLoggedIn(true);
         setIsRegistering(false);
       }
     } catch (error) {
@@ -68,7 +94,7 @@ const Login = () => {
       {!isLoggedIn ? (
         !isRegistering ? (
           <>
-            <img className="user-photo" src={profilePic} alt="Profile" />
+            <img className="user-photo" src={profilePicPreview} alt="Profile" />
             <h2 className="user-name">Invitado</h2>
             <form onSubmit={handleLoginSubmit}>
               <input
@@ -92,11 +118,8 @@ const Login = () => {
         ) : (
           <>
             <div className="register-header">
-              <img className="user-photo" src={profilePic} alt="Profile" />
-              <input
-                type="file"
-                onChange={(e) => setProfilePic(URL.createObjectURL(e.target.files[0]))}
-              />
+              <img className="user-photo" src={profilePicPreview} alt="Profile" />
+              <input type="file" onChange={handleProfilePicChange} />
             </div>
             <form onSubmit={handleRegisterSubmit}>
               <input

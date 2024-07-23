@@ -19,10 +19,17 @@ const Market = () => {
   const [supplements, setSupplements] = useState([]);
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [userData, setUserData] = useState({ name: 'Invitado', profilePicture: 'https://via.placeholder.com/50' });
 
   useEffect(() => {
     // Simulate fetching data from backend
     setSupplements(mockSupplementsData);
+
+    // Fetch user data from local storage
+    const storedUserData = localStorage.getItem('userData');
+    if (storedUserData) {
+      setUserData(JSON.parse(storedUserData));
+    }
   }, []);
 
   const handleSupplementClick = (supplement) => {
@@ -40,8 +47,8 @@ const Market = () => {
   return (
     <div className="market-page">
       <div className="market-header">
-        <img className="user-photo" src="https://via.placeholder.com/50" alt="Profile" />
-        <h2 className="user-name">Pedro</h2>
+        <img className="user-photo" src={userData.profilePicture} alt="Profile" />
+        <h2 className="user-name">{userData.name}</h2>
       </div>
       <div className="search-bar">
         <input
