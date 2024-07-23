@@ -1,20 +1,13 @@
+// src/pages/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
-
-const mockUserData = {
-  username: 'Pedro',
-  email: 'pedro@example.com',
-  phone: '1234567890',
-  address: 'Cll 4a Sur #15',
-  profilePic: 'https://via.placeholder.com/50'
-};
 
 const Login = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
-  const [username, setUsername] = useState('');
+  const [emailOrName, setEmailOrName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
@@ -25,40 +18,47 @@ const Login = () => {
     setIsRegistering(true);
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    // Simulate a successful login with mock data
-    if (username === mockUserData.username) {
-      setUserData(mockUserData);
+    try {
+      const response = await axios.post('http://localhost:5000/api/users/login', {
+        emailOrName,
+        password,
+      });
+      console.log(response.data); // Log the response data
+      setUserData(response.data);
       setIsLoggedIn(true);
-    } else {
-      alert('Incorrect username or password');
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error.message); // Log the error
+      alert('Invalid email/name or password');
     }
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUsername('');
+    setEmailOrName('');
     setPassword('');
+    setUserData({});
   };
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:5000/api/users', {
-        name: username,
+        name: emailOrName,
         email,
         password,
         address,
         phone,
         profilePicture: profilePic
       });
+      console.log(response.data); // Log the response
       if (response.status === 201) {
         alert('User registered successfully!');
         setIsRegistering(false);
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error:', error.response ? error.response.data : error.message); // Log the error
       alert('Error registering user');
     }
   };
@@ -75,8 +75,8 @@ const Login = () => {
                 className="input-field"
                 type="text"
                 placeholder="Username or Email"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={emailOrName}
+                onChange={(e) => setEmailOrName(e.target.value)}
               />
               <input
                 className="input-field"
@@ -103,8 +103,8 @@ const Login = () => {
                 className="input-field"
                 type="text"
                 placeholder="Name"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={emailOrName}
+                onChange={(e) => setEmailOrName(e.target.value)}
               />
               <input
                 className="input-field"
@@ -140,9 +140,9 @@ const Login = () => {
         )
       ) : (
         <div className="user-info">
-          <img className="user-photo" src={userData.profilePic} alt="Profile" />
+          <img className="user-photo" src={userData.profilePicture} alt="Profile" />
           <div className="user-details">
-            <h2 className="user-name">{userData.username}</h2>
+            <h2 className="user-name">{userData.name}</h2>
             <p className="user-address">{userData.address}</p>
           </div>
           <button className="logout-button" onClick={handleLogout}>Logout</button>
