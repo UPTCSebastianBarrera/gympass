@@ -1,5 +1,5 @@
-// src/pages/Login.js
 import React, { useState } from 'react';
+import axios from 'axios';
 import './Login.css';
 
 const mockUserData = {
@@ -42,9 +42,25 @@ const Login = () => {
     setPassword('');
   };
 
-  const handleRegisterSubmit = (e) => {
+  const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-    // Handle registration form submission
+    try {
+      const response = await axios.post('http://localhost:5000/api/users', {
+        name: username,
+        email,
+        password,
+        address,
+        phone,
+        profilePicture: profilePic
+      });
+      if (response.status === 201) {
+        alert('User registered successfully!');
+        setIsRegistering(false);
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error registering user');
+    }
   };
 
   return (
@@ -110,6 +126,13 @@ const Login = () => {
                 placeholder="Address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
+              />
+              <input
+                className="input-field"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button className="register-button" type="submit">Finish Registering</button>
             </form>
