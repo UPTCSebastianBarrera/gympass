@@ -52,7 +52,7 @@
   max-width: 500px; /* 16:9 aspect ratio width */
   aspect-ratio: 9 / 16;
   background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) black;  
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -67,8 +67,8 @@
   display: flex;
   justify-content: space-around;
   background-color: #fff;
-  padding: 10px 0;
-  border-top: 1px solid #ddd;
+  padding: 15px 0;
+  border-top: 1px solid #575757;
 }
 
 .navbar a {

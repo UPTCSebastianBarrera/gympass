@@ -29,6 +29,7 @@ const Map = () => {
           <button>24 hr</button>
           <button>Pesas</button>
           <button>Cardio</button>
+          <button>Más cerca</button>
         </div>
       </div>
       <div className="map">

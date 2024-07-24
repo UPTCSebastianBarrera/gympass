@@ -1,22 +1,37 @@
 /* src/components/NavBar.css */
 .navbar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    background-color: #fff;
-    padding: 10px 0;
-    border-top: 1px solid #ddd;
-  }
-  
-  .navbar a {
-    text-decoration: none;
-    color: #000;
-    font-weight: bold;
-  }
-  
-  .navbar a:hover {
-    color: #ff4081;
-  }
-  
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+}
+
+.navbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  background-color: fff;
+  width: 25%;
+  transition: color 1s ease, transform 1s ease;
+
+}
+
+.navbar-item:hover {
+  background-color: #fda2a2 ;
+  transition: color 1s ease, transform 1s ease; 
+
+}
+.text-navbar-item{
+  color: black;
+}
+
+.navbar img {
+  margin-bottom: 5px;
+}
