@@ -1,19 +1,7 @@
 // src/pages/Market.js
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './Market.css';
-
-const mockSupplementsData = [
-  { id: 1, name: 'Gold Whey', description: 'Updated today', price: '$29.99', image: 'https://via.placeholder.com/150' },
-  { id: 2, name: 'Dinamize ISO 100', description: 'Updated yesterday', price: '$35.99', image: 'https://via.placeholder.com/150' },
-  { id: 3, name: 'Smart Whey Pure', description: 'Updated 2 days ago', price: '$25.99', image: 'https://via.placeholder.com/150' },
-  { id: 4, name: 'Funat Whey Protein', description: 'Updated today', price: '$27.99', image: 'https://via.placeholder.com/150' },
-  { id: 5, name: 'Bi-Pro Classic', description: 'Updated yesterday', price: '$32.99', image: 'https://via.placeholder.com/150' },
-  { id: 6, name: 'Whey Protein Plus', description: 'Updated 3 days ago', price: '$24.99', image: 'https://via.placeholder.com/150' },
-  { id: 7, name: 'Optimum Nutrition Whey', description: 'Updated 4 days ago', price: '$31.99', image: 'https://via.placeholder.com/150' },
-  { id: 8, name: 'MuscleTech NitroTech', description: 'Updated 5 days ago', price: '$36.99', image: 'https://via.placeholder.com/150' },
-  { id: 9, name: 'Body Fortress Whey', description: 'Updated 6 days ago', price: '$22.99', image: 'https://via.placeholder.com/150' },
-  { id: 10, name: 'Dymatize Elite Whey', description: 'Updated a week ago', price: '$28.99', image: 'https://via.placeholder.com/150' }
-];
 
 const Market = () => {
   const [supplements, setSupplements] = useState([]);
@@ -22,8 +10,13 @@ const Market = () => {
   const [userData, setUserData] = useState({ name: 'Invitado', profilePicture: 'https://via.placeholder.com/50' });
 
   useEffect(() => {
-    // Simulate fetching data from backend
-    setSupplements(mockSupplementsData);
+    // Fetch supplement data from backend
+    const fetchSupplements = async () => {
+      const { data } = await axios.get('http://localhost:5000/api/supplements');
+      setSupplements(data);
+    };
+
+    fetchSupplements();
 
     // Fetch user data from local storage
     const storedUserData = localStorage.getItem('userData');
@@ -67,7 +60,7 @@ const Market = () => {
       </div>
       <div className={`supplements-grid ${selectedSupplement ? 'blurred' : ''}`}>
         {filteredSupplements.map((supplement) => (
-          <div className="supplement-item" key={supplement.id} onClick={() => handleSupplementClick(supplement)}>
+          <div className="supplement-item" key={supplement._id} onClick={() => handleSupplementClick(supplement)}>
             <img className="supplement-photo" src={supplement.image} alt={supplement.name} />
             <h3 className="supplement-name">{supplement.name}</h3>
             <p className="supplement-description">{supplement.description}</p>
