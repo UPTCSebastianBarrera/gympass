@@ -8,7 +8,8 @@
 
 .map-header {
   display: flex;
-  justify-content: space-between; /* Ensures space between the user-info and user-location */
+  justify-content: space-between;
+  /* Ensures space between the user-info and user-location */
   align-items: center;
   margin-bottom: 20px;
   width: 100%;
@@ -45,7 +46,7 @@
 .search-bar {
   margin-bottom: 20px;
   width: 100%;
-  
+
 }
 
 .search-bar input {
@@ -73,7 +74,6 @@
 }
 
 .map {
-  flex: 1;
+  height: 400px;
   width: 100%;
-  /* Insert map component styles here */
 }

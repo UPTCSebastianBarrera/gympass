@@ -1,15 +1,26 @@
-// src/pages/Map.js
 import React, { useState, useEffect } from 'react';
 import './Map.css';
+import UserLocationMap from '../components/UserLocationMap';
 
 const Map = () => {
   const [userData, setUserData] = useState({ name: 'Invitado', profilePicture: 'https://via.placeholder.com/50', address: 'N/A' });
+  const [userPosition, setUserPosition] = useState(null);
 
   useEffect(() => {
-    // Fetch user data from local storage
     const storedUserData = localStorage.getItem('userData');
     if (storedUserData) {
       setUserData(JSON.parse(storedUserData));
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setUserPosition([position.coords.latitude, position.coords.longitude]);
+        },
+        (error) => {
+          console.error('Error obteniendo la ubicación', error);
+        }
+      );
     }
   }, []);
 
@@ -33,7 +44,7 @@ const Map = () => {
         </div>
       </div>
       <div className="map">
-        {/* Insert map component here */}
+        <UserLocationMap position={userPosition} />
       </div>
     </div>
   );
