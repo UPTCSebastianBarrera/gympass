@@ -1,86 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import Select from 'react-select';
 import './Map.css';
 import UserLocationMap from '../components/UserLocationMap';
+import useInitializeData from '../services/Map/useInitializeData';
+
+const tagOptions = [
+  { value: 'Todos', label: 'Todos' },
+  { value: 'Crossfit', label: 'Crossfit' },
+  { value: '24 hr', label: '24 hr' },
+  { value: 'Pesas', label: 'Pesas' },
+  { value: 'Cardio', label: 'Cardio' },
+  { value: 'Cycling', label: 'Cycling' },
+  { value: 'Yoga', label: 'Yoga' },
+  { value: 'Spinning', label: 'Spinning' },
+  { value: 'Natación', label: 'Natación' },
+  { value: 'Pilates', label: 'Pilates' },
+  { value: 'Zumba', label: 'Zumba' },
+  { value: 'Boxeo', label: 'Boxeo' }
+];
 
 const Map = () => {
   const [userData, setUserData] = useState({ name: 'Invitado', profilePicture: 'https://via.placeholder.com/50', address: 'N/A' });
-  const [userPosition, setUserPosition] = useState([4.7110, -74.0721]); // Inicialmente Bogotá
-  const [geoError, setGeoError] = useState(null); // Estado para manejar errores de geolocalización
-  const [gyms, setGyms] = useState([]); // Estado para los gimnasios
+  const [userPosition, setUserPosition] = useState([5.5353, -73.3678]);
+  const [geoError, setGeoError] = useState(null);
+  const [gyms, setGyms] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([{ value: 'Todos', label: 'Todos' }]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const geocodeAddress = async (address) => {
-    try {
-      let encodedAddress = encodeURIComponent(address);
-      let response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${encodedAddress}&format=json&limit=1`);
+  useInitializeData(setGyms, setUserData, setUserPosition, setGeoError);
 
-      if (response.data && response.data.length > 0) {
-        return {
-          lat: parseFloat(response.data[0].lat),
-          lon: parseFloat(response.data[0].lon),
-        };
-      }
-
-      // Si no encuentra coordenadas, intenta sin la ciudad
-      const addressWithoutCity = address.split(',')[0];
-      encodedAddress = encodeURIComponent(addressWithoutCity);
-      response = await axios.get(`https://nominatim.openstreetmap.org/search?q=${encodedAddress}&format=json&limit=1`);
-
-      if (response.data && response.data.length > 0) {
-        return {
-          lat: parseFloat(response.data[0].lat),
-          lon: parseFloat(response.data[0].lon),
-        };
-      }
-
-      console.error(`No coordinates found for address: ${address}`);
-      return null;
-    } catch (error) {
-      console.error(`Error geocoding address: ${address}`, error);
-      return null;
-    }
+  const handleTagChange = (selectedOptions) => {
+    setSelectedTags(selectedOptions || []);
   };
 
-  useEffect(() => {
-    const fetchGyms = async () => {
-      try {
-        const { data } = await axios.get('http://localhost:5000/api/gyms');
-        const gymsWithCoords = await Promise.all(
-          data.map(async (gym) => {
-            const coords = await geocodeAddress(gym.address);
-            return {
-              ...gym,
-              coords,
-            };
-          })
-        );
-        setGyms(gymsWithCoords.filter(gym => gym.coords !== null));
-      } catch (error) {
-        console.error('Error fetching gyms', error);
-      }
-    };
-
-    fetchGyms();
-
-    const storedUserData = localStorage.getItem('userData');
-    if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
-    }
-
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserPosition([position.coords.latitude, position.coords.longitude]);
-        },
-        (error) => {
-          setGeoError('No se pudo obtener su ubicación. Asegúrese de que los servicios de ubicación estén habilitados.');
-          console.error('Error obteniendo la ubicación', error);
-        }
-      );
-    } else {
-      setGeoError('La geolocalización no es compatible con este navegador.');
-    }
-  }, []);
+  const filteredGyms = gyms.filter((gym) => {
+    const matchesTags = selectedTags.some(tag => tag.value === 'Todos') || selectedTags.some((tag) => gym.tags.includes(tag.value));
+    const matchesSearch = gym.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesTags && matchesSearch;
+  });
 
   return (
     <div className="map-page">
@@ -94,18 +51,28 @@ const Map = () => {
         </div>
       </div>
       <div className="search-bar">
-        <input type="text" placeholder="Buscar gimnasio ..." />
-        <div className="tags">
-          <button>Crossfit</button>
-          <button>24 hr</button>
-          <button>Pesas</button>
-          <button>Cardio</button>
-          <button>Más cerca</button>
-        </div>
+        <input
+          type="text"
+          placeholder="Buscar gimnasio ..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Select
+          isMulti
+          value={selectedTags}
+          onChange={handleTagChange}
+          options={tagOptions}
+          className="tag-select"
+          placeholder="Seleccionar etiquetas..."
+        />
       </div>
-      {geoError && <div className="geo-error">{geoError}</div>} {/* Mostrar el mensaje de error si hay */}
+      {geoError && <div className="geo-error">{geoError}</div>}
       <div className="map-container">
-        <UserLocationMap position={userPosition} gyms={gyms} />
+        {filteredGyms.length > 0 ? (
+          <UserLocationMap position={userPosition} gyms={filteredGyms} />
+        ) : (
+          <div className="no-gyms-message">No se encontraron gimnasios</div>
+        )}
       </div>
     </div>
   );
