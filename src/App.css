@@ -37,8 +37,6 @@
   }
 }
 
-
-/* src/App.css */
 .app-container {
   display: flex;
   justify-content: center;
@@ -60,23 +58,3 @@
   flex-direction: column;
 }
 
-.navbar {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  background-color: #fff;
-  padding: 15px 0;
-  border-top: 1px solid #575757;
-}
-
-.navbar a {
-  text-decoration: none;
-  color: #000;
-  font-weight: bold;
-}
-
-.navbar a:hover {
-  color: #ff4081;
-}

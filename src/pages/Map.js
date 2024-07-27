@@ -20,10 +20,10 @@ const tagOptions = [
 ];
 
 const Map = () => {
-  const [userData, setUserData] = useState({ name: 'Invitado', profilePicture: 'https://via.placeholder.com/50', address: 'N/A' });
   const [userPosition, setUserPosition] = useState([5.5353, -73.3678]);
   const [geoError, setGeoError] = useState(null);
   const [gyms, setGyms] = useState([]);
+  const [userData, setUserData] = useState({}); // Añadir estado para userData
   const [selectedTags, setSelectedTags] = useState([{ value: 'Todos', label: 'Todos' }]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -41,15 +41,6 @@ const Map = () => {
 
   return (
     <div className="map-page">
-      <div className="map-header">
-        <div className="user-info">
-          <img className="user-photo" src={userData.profilePicture} alt="Profile" />
-          <h2 className="user-name">{userData.name}</h2>
-        </div>
-        <div className="user-location">
-          <p className="location-text">{userData.address}</p>
-        </div>
-      </div>
       <div className="search-bar">
         <input
           type="text"
@@ -73,6 +64,9 @@ const Map = () => {
         ) : (
           <div className="no-gyms-message">No se encontraron gimnasios</div>
         )}
+      </div>
+      <div>
+        <button className='booking'>Reservar</button>
       </div>
     </div>
   );

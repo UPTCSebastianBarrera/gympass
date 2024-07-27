@@ -62,25 +62,6 @@
   border-radius: 5px;
 }
 
-.tags {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.tags button {
-  padding: 10px;
-  background-color: #FD8D8D;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
-  margin: 5px;
-}
-
 .geo-error {
   color: red;
   margin-bottom: 20px;
@@ -125,10 +106,15 @@
     height: 300px; /* Adjust height for smaller screens */
   } 
 }
-
-.tags button.selected {
-  background-color: #007bff;
+.booking{
+  padding: 10px;
+  background-color: #FD8D8D;
   color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 .no-gyms-message {

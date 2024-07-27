@@ -1,49 +1,41 @@
-/* src/components/NavBar.css */
 .navbar {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  bottom: 5px;
   width: 100%;
   display: flex;
   justify-content: space-around;
   background-color: #fff;
-  padding: 5px 0; /* Reducir el padding superior e inferior */
-  border-top: 1px solid #ddd;
+  padding: 5px 0;
+  border-top: 1px solid #d7d4d4;
 }
 
 .navbar-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-decoration: none;
-  color: #000;
-  font-weight: bold;
-  width: 20%; /* Reducir el ancho de cada item */
   transition: color 1s ease, transform 1s ease;
 }
 
 .navbar-item:hover .image-container {
-  background-color: #fda2a2;
+  background-color: #ffd5d5;
   transition: background-color 1s ease;
 }
 
 .image-container {
   background-color: #fff;
   padding: 5px; /* Reducir el padding alrededor del icono */
-  margin-bottom: 5px; /* Reducir el margen inferior */
-  border-radius: 50%; /* Mantener los bordes redondeados */
+  border-radius: 30%; /* Mantener los bordes redondeados */
 }
 
 .navbar img {
-  width: 30px; /* Ajustar el tamaño de la imagen */
-  margin-bottom: 0;
+  width: 25px; /* Ajustar el tamaño de la imagen si es necesario */
 }
 
 .text-navbar-item {
-  color: black;
   transition: color 1s ease;
-  font-size: 0.8em; /* Reducir el tamaño del texto */
+  font-size: 0.75em; /* Reducir el tamaño del texto */
 }
 
 .navbar-item:hover .text-navbar-item {
-  color: #ff4081;
+  color: #ff7979;
 }
