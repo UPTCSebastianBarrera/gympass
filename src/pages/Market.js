@@ -36,7 +36,7 @@ const Market = () => {
         <input
           className="search-input"
           type="text"
-          placeholder="Search supplements..."
+          placeholder="Busca un suplemento..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />

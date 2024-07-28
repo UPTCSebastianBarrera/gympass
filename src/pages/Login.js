@@ -8,8 +8,10 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicPreview, setProfilePicPreview] = useState('https://via.placeholder.com/50');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleRegisterClick = () => {
     setIsRegistering(true);
@@ -18,11 +20,33 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
   const onLoginSubmit = (e) => {
     e.preventDefault();
     handleLoginSubmit(emailOrName, password);
+    setEmailOrName('');
+    setPassword('');
   };
-
+  
   const onRegisterSubmit = (e) => {
     e.preventDefault();
+    if (!validatePassword(password)) {
+      alert('La contraseña debe tener un minimo de 8 y maximo de 32 caracteres, debe contener por lo menos una letra mayuscula, una letra minuscula, un numero y un caracter especial.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      alert('La contraseñas no coinciden.');
+      return;
+    }
+    if (!validateEmail(email)) {
+      alert('Email debe tener como dominio @gmail.com o @uptc.edu.co.');
+      return;
+    }
     handleRegisterSubmit({ name: emailOrName, email, password, address, phone, profilePicture: profilePic });
+    setEmailOrName('');
+    setEmail('');
+    setPhone('');
+    setAddress('');
+    setPassword('');
+    setConfirmPassword('');
+    setProfilePic(null);
+    setProfilePicPreview('https://via.placeholder.com/50');
   };
 
   const handleProfilePicChange = (e) => {
@@ -37,6 +61,16 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
     }
   };
 
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,32}$/;
+    return regex.test(password);
+  };
+
+  const validateEmail = (email) => {
+    const regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|uptc\.edu\.co)$/;
+    return regex.test(email);
+  };
+
   return (
     <div className="login-page">
       {!isLoggedIn ? (
@@ -46,20 +80,30 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
               <input
                 className="input-field"
                 type="text"
-                placeholder="Username or Email"
+                placeholder="Nombre de Usuario o Correo"
                 value={emailOrName}
                 onChange={(e) => setEmailOrName(e.target.value)}
               />
               <input
                 className="input-field"
-                type="password"
-                placeholder="Password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button className="login-button" type="submit">Login</button>
+              <label className="show-password">
+                <input
+                  
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+                Mostrar Contraseña
+              </label>
+              <button className="login-button" type="submit">Ingresar</button>
+              <button className="register-button" onClick={handleRegisterClick}>Registrarse</button>
             </form>
-            <button className="register-button" onClick={handleRegisterClick}>Register</button>
+            
           </>
         ) : (
           <>
@@ -71,45 +115,60 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
               <input
                 className="input-field"
                 type="text"
-                placeholder="Name"
+                placeholder="Nombre de Usuario"
                 value={emailOrName}
                 onChange={(e) => setEmailOrName(e.target.value)}
               />
               <input
                 className="input-field"
                 type="text"
-                placeholder="Phone Number"
+                placeholder="Telefono"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
               <input
                 className="input-field"
                 type="email"
-                placeholder="Email"
+                placeholder="Correo electronico"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
               <input
                 className="input-field"
                 type="text"
-                placeholder="Address"
+                placeholder="Dirección"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
               />
               <input
                 className="input-field"
-                type="password"
-                placeholder="Password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Contraseña"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-              <button className="register-button" type="submit">Finish Registering</button>
+              <input
+                className="input-field"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Confirmar contraseña"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <label className="show-password">
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+                Mostrar Contraseña
+              </label>
+              <button className="register-button" type="submit">Registrarse</button>
             </form>
           </>
         )
       ) : (
         <div className="user-info">
-          <button className="logout-button" onClick={handleLogout}>Logout</button>
+          <button className="logout-button" onClick={handleLogout}>Salir</button>
         </div>
       )}
     </div>
