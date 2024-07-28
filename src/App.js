@@ -5,19 +5,19 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import axios from 'axios'; // Import axios
 import NavBar from "./components/NavBar";
 import UserInfo from "./components/UserInfo";
 import Login from "./pages/Login";
 import Map from "./pages/Map";
 import Market from "./pages/Market";
 import AdminDashboard from "./pages/AdminDashboard";
-import {
-  fetchUserDataFromLocalStorage,
-  loginUser,
-  logoutUser,
-  registerUser,
-} from "./services/App/userAuth";
 import "./App.css";
+
+const fetchUserDataFromLocalStorage = () => {
+  const storedUserData = localStorage.getItem('userData');
+  return storedUserData ? JSON.parse(storedUserData) : { name: 'Invitado', profilePicture: 'https://via.placeholder.com/50', address: 'N/A' };
+};
 
 const App = () => {
   const [userData, setUserData] = useState(fetchUserDataFromLocalStorage());
@@ -34,15 +34,39 @@ const App = () => {
   }, []);
 
   const handleLoginSubmit = async (emailOrName, password) => {
-    await loginUser(emailOrName, password, setUserData, setIsLoggedIn);
+    try {
+      const response = await axios.post('http://localhost:5000/api/users/login', { emailOrName, password });
+      const data = response.data;
+      const isAdmin = data.email === 'administrador@gmail.com';
+      setUserData({ ...data, isAdmin });
+      setIsLoggedIn(true);
+      localStorage.setItem('userData', JSON.stringify({ ...data, isAdmin }));
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error.message);
+      alert('Invalid email/name or password');
+    }
   };
 
   const handleLogout = () => {
-    logoutUser(setUserData, setIsLoggedIn);
+    setIsLoggedIn(false);
+    setUserData({ name: 'Invitado', profilePicture: 'https://via.placeholder.com/50', address: 'N/A', isAdmin: false });
+    localStorage.removeItem('userData');
   };
 
   const handleRegisterSubmit = async (userDetails) => {
-    await registerUser(userDetails, setUserData, setIsLoggedIn);
+    try {
+      const response = await axios.post('http://localhost:5000/api/users', userDetails);
+      const data = response.data;
+      if (response.status === 201) {
+        alert('User registered successfully!');
+        setUserData(data);
+        setIsLoggedIn(true);
+        localStorage.setItem('userData', JSON.stringify(data));
+      }
+    } catch (error) {
+      console.error('Error:', error.response ? error.response.data : error.message);
+      alert('Error registering user');
+    }
   };
 
   return (
