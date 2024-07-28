@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import UserInfo from './components/UserInfo';
-import Login from './pages/Login';
-import Map from './pages/Map';
-import Market from './pages/Market';
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import NavBar from "./components/NavBar";
+import UserInfo from "./components/UserInfo";
+import Login from "./pages/Login";
+import Map from "./pages/Map";
+import Market from "./pages/Market";
+import AdminDashboard from "./pages/AdminDashboard";
 import {
   fetchUserDataFromLocalStorage,
   loginUser,
   logoutUser,
-  registerUser
-} from './services/App/userAuth';
-import './App.css';
+  registerUser,
+} from "./services/App/userAuth";
+import "./App.css";
 
 const App = () => {
   const [userData, setUserData] = useState(fetchUserDataFromLocalStorage());
@@ -19,9 +25,10 @@ const App = () => {
 
   useEffect(() => {
     // Fetch user data from local storage
-    const storedUserData = localStorage.getItem('userData');
+    const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
+      const parsedUserData = JSON.parse(storedUserData);
+      setUserData(parsedUserData);
       setIsLoggedIn(true);
     }
   }, []);
@@ -43,23 +50,26 @@ const App = () => {
       <div className="app-container">
         <div className="App">
           <UserInfo userData={userData} />
-          <NavBar />
+          <NavBar isAdmin={userData.isAdmin} />
           <Routes>
             <Route path="/gyms" element={<Map />} />
-            <Route 
-              path="/products" 
-              element={<Market />} 
-            />
-            <Route 
-              path="/account" 
+            <Route path="/products" element={<Market />} />
+            <Route
+              path="/account"
               element={
-                <Login 
+                <Login
                   isLoggedIn={isLoggedIn}
                   userData={userData}
                   handleLoginSubmit={handleLoginSubmit}
                   handleLogout={handleLogout}
                   handleRegisterSubmit={handleRegisterSubmit}
                 />
+              }
+            />
+            <Route 
+              path="/admin" 
+              element={
+                isLoggedIn && userData.isAdmin ? <AdminDashboard /> : <Navigate to="/account" />
               } 
             />
             <Route path="*" element={<Navigate to="/gyms" />} />

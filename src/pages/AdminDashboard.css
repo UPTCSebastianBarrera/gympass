@@ -1,0 +1,60 @@
+/* src/pages/AdminDashboard.css */
+.admin-dashboard {
+    padding: 20px;
+  }
+  
+  .admin-sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .admin-map, .admin-market, .admin-gym-crud {
+    flex: 1;
+    min-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+  }
+  
+  /* src/components/GymCRUD.css */
+  .gym-crud form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .gym-crud input, .gym-crud textarea {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .gym-crud button {
+    padding: 8px 16px;
+    background-color: #FD8D8D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .gym-crud ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .gym-crud li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+.admin-dashboard {
+    padding: 20px;
+    padding-bottom: 80px; /* Ajusta este valor según la altura de tu NavBar */
+    overflow-y: auto;
+    height: calc(100vh - 60px); /* Ajusta 60px según la altura de tu header si lo tienes */
+  }

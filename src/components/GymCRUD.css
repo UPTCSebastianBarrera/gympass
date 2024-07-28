@@ -1,0 +1,100 @@
+/* src/components/GymCRUD.css */
+.gym-crud {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .gym-crud form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.05);
+  }
+  
+  .gym-crud input, .gym-crud textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .gym-crud textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .gym-crud button {
+    padding: 10px 20px;
+    background-color: #FD8D8D;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .gym-crud button:hover {
+    background-color: #ff7070;
+  }
+  
+  .gym-crud button[type="button"] {
+    background-color: #6c757d;
+  }
+  
+  .gym-crud button[type="button"]:hover {
+    background-color: #5a6268;
+  }
+  
+  .gym-crud ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .gym-crud li {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .gym-crud li h3 {
+    margin-top: 0;
+    color: #333;
+  }
+  
+  .gym-crud li p {
+    margin: 5px 0;
+    color: #666;
+  }
+  
+  .gym-crud li button {
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+  
+  @media (max-width: 600px) {
+    .gym-crud {
+      padding: 10px;
+    }
+    
+    .gym-crud form {
+      padding: 15px;
+    }
+    
+    .gym-crud input, .gym-crud textarea {
+      font-size: 16px; /* Mejor para dispositivos móviles */
+    }
+  }
