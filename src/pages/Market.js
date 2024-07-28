@@ -1,4 +1,3 @@
-// src/pages/Market.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Market.css';
@@ -7,9 +6,9 @@ const Market = () => {
   const [supplements, setSupplements] = useState([]);
   const [selectedSupplement, setSelectedSupplement] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const tags = ['Todas','Protein', 'Pre entreno', 'Creatina', 'Gainers'];
 
   useEffect(() => {
-    // Fetch supplement data from backend
     const fetchSupplements = async () => {
       const { data } = await axios.get('http://localhost:5000/api/supplements');
       setSupplements(data);
@@ -26,6 +25,14 @@ const Market = () => {
     setSelectedSupplement(null);
   };
 
+  const handleTagClick = (tag) => {
+    if (tag === 'Todas') {
+      setSearchQuery('');
+    } else {
+      setSearchQuery(tag);
+    }
+  };
+
   const filteredSupplements = supplements.filter(supplement =>
     supplement.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -36,15 +43,20 @@ const Market = () => {
         <input
           className="search-input"
           type="text"
-          placeholder="Busca un suplemento..."
+          placeholder="Buscar suplementos"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
         <div className="tags">
-          <button className="tag-button">Proteina</button>
-          <button className="tag-button">Pre entreno</button>
-          <button className="tag-button">Creatina</button>
-          <button className="tag-button">Gainers</button>
+          {tags.map((tag) => (
+            <button
+              key={tag}
+              className="tag-button"
+              onClick={() => handleTagClick(tag)}
+            >
+              {tag}
+            </button>
+          ))}
         </div>
       </div>
       <div className={`supplements-grid ${selectedSupplement ? 'blurred' : ''}`}>
