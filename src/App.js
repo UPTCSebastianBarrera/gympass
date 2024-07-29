@@ -42,7 +42,7 @@ const App = () => {
   const handleLoginSubmit = async (emailOrName, password) => {
     try {
       const response = await axios.post(
-        "${process.env.REACT_APP_API_BASE_URL}/api/users/login",
+        "https://gympass-backend.vercel.app/api/users/login",
         { emailOrName, password }
       );
       const data = response.data;
@@ -73,7 +73,7 @@ const App = () => {
   const handleRegisterSubmit = async (userDetails) => {
     try {
       const response = await axios.post(
-        "${process.env.REACT_APP_API_BASE_URL}/api/users",
+        "https://gympass-backend.vercel.app/api/users",
         userDetails
       );
       const data = response.data;

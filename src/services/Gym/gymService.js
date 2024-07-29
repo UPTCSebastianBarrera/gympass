@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '${process.env.REACT_APP_API_BASE_URL}/api/gyms';
+const API_URL = 'https://gympass-backend.vercel.app/api/gyms';
 
 export const getGyms = async () => {
   try {

@@ -8,7 +8,7 @@ export const fetchUserDataFromLocalStorage = () => {
 // En userAuth.js o un archivo similar
 export const loginUser = async (emailOrName, password, setUserData, setIsLoggedIn) => {
   try {
-    const response = await axios.post('${process.env.REACT_APP_API_BASE_URL}/api/users/login', { emailOrName, password });
+    const response = await axios.post('https://gympass-backend.vercel.app/api/users/login', { emailOrName, password });
     const data = response.data;
     const isAdmin = data.email === 'administrador@gmail.com';
     setUserData({ ...data, isAdmin });
@@ -28,7 +28,7 @@ export const logoutUser = (setUserData, setIsLoggedIn) => {
 
 export const registerUser = async (userDetails, setUserData, setIsLoggedIn) => {
   try {
-    const response = await axios.post('${process.env.REACT_APP_API_BASE_URL}/api/users', userDetails);
+    const response = await axios.post('https://gympass-backend.vercel.app/api/users', userDetails);
     const data = response.data;
     if (response.status === 201) {
       alert('User registered successfully!');

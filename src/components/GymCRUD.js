@@ -24,7 +24,7 @@ const GymCRUD = () => {
 
   const fetchGyms = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/admin/gyms');
+      const { data } = await axios.get('https://gympass-backend.vercel.app/api/admin/gyms');
       setGyms(data);
     } catch (error) {
       console.error('Error fetching gyms:', error);
@@ -46,10 +46,10 @@ const GymCRUD = () => {
       };
 
       if (editingGym) {
-        await axios.put(`http://localhost:5000/api/admin/gyms/${editingGym._id}`, gymData);
+        await axios.put(`https://gympass-backend.vercel.app/api/admin/gyms/${editingGym._id}`, gymData);
         setAlert({ message: 'Gimnasio actualizado exitosamente', type: 'success' });
       } else {
-        await axios.post('http://localhost:5000/api/admin/gyms', gymData);
+        await axios.post('https://gympass-backend.vercel.app/api/admin/gyms', gymData);
         setAlert({ message: 'Gimnasio agregado exitosamente', type: 'success' });
       }
       fetchGyms();
@@ -72,7 +72,7 @@ const GymCRUD = () => {
   const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este gimnasio?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/gyms/${id}`);
+        await axios.delete(`https://gympass-backend.vercel.app/api/admin/gyms/${id}`);
         setGyms(gyms.filter(gym => gym._id !== id));
         setAlert({ message: 'Gimnasio eliminado exitosamente', type: 'success' });
       } catch (error) {

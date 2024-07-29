@@ -3,7 +3,7 @@ import geocodeAddress from './geoLocalization';
 
 const fetchGyms = async () => {
   try {
-    const { data } = await axios.get('${process.env.REACT_APP_API_BASE_URL}/api/gyms', { timeout: 10000 });
+    const { data } = await axios.get('https://gympass-backend.vercel.app/api/gyms', { timeout: 10000 });
     const gymsWithCoords = await Promise.all(
       data.map(async (gym) => {
         const coords = await geocodeAddress(gym.address);
