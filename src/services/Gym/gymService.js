@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/gyms';
+const API_URL = '${process.env.REACT_APP_API_BASE_URL}/api/gyms';
 
 export const getGyms = async () => {
   try {
