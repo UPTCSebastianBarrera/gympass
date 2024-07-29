@@ -35,6 +35,7 @@ const Map = () => {
 
   const handleTagChange = (selectedOptions) => {
     setSelectedTags(selectedOptions || []);
+    userData = 'Toca usar esta variable jejejejejejejeje';
   };
 
   const handleGymSelect = (gym) => {
