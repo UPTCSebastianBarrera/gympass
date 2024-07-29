@@ -24,7 +24,7 @@ const Map = () => {
   const [userPosition, setUserPosition] = useState([5.5353, -73.3678]);
   const [geoError, setGeoError] = useState(null);
   const [gyms, setGyms] = useState([]);
-  //gran hpta variable al voy a desplegar quiera o no, hpta
+  // eslint-disable-next-line no-unused-vars
   const [userData, setUserData] = useState({'xd':'xd'});
 
   const [selectedTags, setSelectedTags] = useState([{ value: 'Todos', label: 'Todos' }]);
