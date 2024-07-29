@@ -1,12 +1,12 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
 const userIcon = new L.Icon({
   iconUrl: require('./UserLocation.png'),
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
+  iconSize: [30, 51],
+  iconAnchor: [10, 51],
 });
 
 const gymIcon = new L.Icon({
@@ -15,8 +15,16 @@ const gymIcon = new L.Icon({
   iconAnchor: [6, 41],
 });
 
-const UserLocationMap = ({ position, gyms, onSelectGym }) => {
+const UserLocationMap = forwardRef(({ position, gyms, onSelectGym }, ref) => {
   const mapRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    centerMap() {
+      if (mapRef.current) {
+        mapRef.current.setView(position, mapRef.current.getZoom());
+      }
+    }
+  }));
 
   useEffect(() => {
     if (mapRef.current) {
@@ -54,6 +62,6 @@ const UserLocationMap = ({ position, gyms, onSelectGym }) => {
       ))}
     </MapContainer>
   );
-};
+});
 
 export default UserLocationMap;

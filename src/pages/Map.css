@@ -106,7 +106,8 @@
     height: 300px; /* Adjust height for smaller screens */
   } 
 }
-.booking{
+
+.booking {
   padding: 10px;
   background-color: #FD8D8D;
   color: white;
@@ -128,6 +129,7 @@
   margin-top: 10px;
   width: 100%; /* Asegura que el select se ajuste al ancho del contenedor */
 }
+
 .gym-popup {
   cursor: pointer;
 }
@@ -137,3 +139,17 @@
   border-radius: 5px; 
 }
 
+.center-button {
+  padding: 10px 20px;
+  background-color: #FD8D8D;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.center-button:hover {
+  background-color: #fec0c0;
+}
