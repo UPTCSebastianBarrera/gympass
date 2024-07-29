@@ -1,6 +1,6 @@
 // src/components/GymCRUD.js
 import React, { useState, useEffect } from 'react';
-import { getGyms, createGym, updateGym, deleteGym } from '../services/Gym/gymService';
+import axios from 'axios';
 import Alert from './Alert';
 import './GymCRUD.css';
 
@@ -24,8 +24,8 @@ const GymCRUD = () => {
 
   const fetchGyms = async () => {
     try {
-      const gymsData = await getGyms();
-      setGyms(gymsData);
+      const { data } = await axios.get('http://localhost:5000/api/admin/gyms');
+      setGyms(data);
     } catch (error) {
       console.error('Error fetching gyms:', error);
     }
@@ -46,10 +46,10 @@ const GymCRUD = () => {
       };
 
       if (editingGym) {
-        await updateGym(editingGym._id, gymData);
+        await axios.put(`http://localhost:5000/api/admin/gyms/${editingGym._id}`, gymData);
         setAlert({ message: 'Gimnasio actualizado exitosamente', type: 'success' });
       } else {
-        await createGym(gymData);
+        await axios.post('http://localhost:5000/api/admin/gyms', gymData);
         setAlert({ message: 'Gimnasio agregado exitosamente', type: 'success' });
       }
       fetchGyms();
@@ -72,13 +72,11 @@ const GymCRUD = () => {
   const handleDelete = async (id) => {
     if (window.confirm('¿Estás seguro de que quieres eliminar este gimnasio?')) {
       try {
-        await deleteGym(id);
-        // Actualiza el estado local después de la eliminación
+        await axios.delete(`http://localhost:5000/api/admin/gyms/${id}`);
         setGyms(gyms.filter(gym => gym._id !== id));
         setAlert({ message: 'Gimnasio eliminado exitosamente', type: 'success' });
       } catch (error) {
         console.error('Error al eliminar el gimnasio:', error);
-        // Muestra un mensaje de error al usuario
         setAlert({ message: 'Error al eliminar el gimnasio', type: 'error' });
       }
     }
@@ -99,7 +97,7 @@ const GymCRUD = () => {
 
   return (
     <div className="gym-crud">
-        {alert && (
+      {alert && (
         <Alert 
           message={alert.message} 
           type={alert.type} 
