@@ -25,12 +25,13 @@ const Map = () => {
   const [geoError, setGeoError] = useState(null);
   const [gyms, setGyms] = useState([]);
   const [userData, setUserData] = useState({'xd':'xd'});
+
   const [selectedTags, setSelectedTags] = useState([{ value: 'Todos', label: 'Todos' }]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const navigate = useNavigate();
 
-  useInitializeData(setGyms, setUserData, setUserPosition, setGeoError);
+  useInitializeData(setGyms, setUserData,setUserPosition, setGeoError);
 
   const handleTagChange = (selectedOptions) => {
     setSelectedTags(selectedOptions || []);
