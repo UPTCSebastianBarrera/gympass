@@ -24,14 +24,14 @@ const Map = () => {
   const [userPosition, setUserPosition] = useState([5.5353, -73.3678]);
   const [geoError, setGeoError] = useState(null);
   const [gyms, setGyms] = useState([]);
-  // const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({});
   //se removio userdata por que no se esta usando
   const [selectedTags, setSelectedTags] = useState([{ value: 'Todos', label: 'Todos' }]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const navigate = useNavigate();
 
-  useInitializeData(setGyms, setUserPosition, setGeoError);
+  useInitializeData(setGyms,setUserData , setUserPosition, setGeoError);
 
   const handleTagChange = (selectedOptions) => {
     setSelectedTags(selectedOptions || []);
