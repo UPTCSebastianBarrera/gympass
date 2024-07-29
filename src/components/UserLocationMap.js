@@ -3,21 +3,19 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// Icono personalizado para la posición del usuario
 const userIcon = new L.Icon({
   iconUrl: require('./UserLocation.png'),
   iconSize: [25, 41],
   iconAnchor: [12, 41],
 });
 
-// Icono para los gimnasios
 const gymIcon = new L.Icon({
-  iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  iconSize: [20, 41],
-  iconAnchor: [12, 41],
+  iconUrl: require('./GymUbi.png'),
+  iconSize: [35, 41],
+  iconAnchor: [6, 41],
 });
 
-const UserLocationMap = ({ position, gyms }) => {
+const UserLocationMap = ({ position, gyms, onSelectGym }) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
@@ -25,6 +23,10 @@ const UserLocationMap = ({ position, gyms }) => {
       mapRef.current.setView(position);
     }
   }, [position]);
+
+  const handleGymClick = (gym) => {
+    onSelectGym(gym);
+  };
 
   return (
     <MapContainer center={position} zoom={13} style={{ height: "100%", width: "100%" }} ref={mapRef}>
@@ -38,13 +40,15 @@ const UserLocationMap = ({ position, gyms }) => {
       {gyms.map((gym) => (
         <Marker key={gym._id} position={[gym.coords.lat, gym.coords.lon]} icon={gymIcon}>
           <Popup>
-            <strong>{gym.name}</strong><br />
-            {gym.description}<br />
-            Dirección: {gym.address}<br />
-            Horario: {gym.schedule}<br />
-            Precio: {gym.price}<br />
-            Planes: {gym.plans.join(", ")}<br />
-            Tags: {gym.tags.join(", ")}
+            <div className="gym-popup" onClick={() => handleGymClick(gym)}>
+              <strong>{gym.name}</strong><br />
+              {gym.description}<br />
+              Dirección: {gym.address}<br />
+              Horario: {gym.schedule}<br />
+              Precio: {gym.price}<br />
+              Planes: {gym.plans.join(", ")}<br />
+              Tags: {gym.tags.join(", ")}
+            </div>
           </Popup>
         </Marker>
       ))}

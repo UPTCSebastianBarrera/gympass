@@ -128,3 +128,12 @@
   margin-top: 10px;
   width: 100%; /* Asegura que el select se ajuste al ancho del contenedor */
 }
+.gym-popup {
+  cursor: pointer;
+}
+
+.gym-popup:hover {
+  background-color: #f3f6fd;
+  border-radius: 5px; 
+}
+

@@ -3,6 +3,7 @@ import Select from 'react-select';
 import './Map.css';
 import UserLocationMap from '../components/UserLocationMap';
 import useInitializeData from '../services/Map/useInitializeData';
+import { useNavigate } from 'react-router-dom';
 
 const tagOptions = [
   { value: 'Todos', label: 'Todos' },
@@ -23,14 +24,20 @@ const Map = () => {
   const [userPosition, setUserPosition] = useState([5.5353, -73.3678]);
   const [geoError, setGeoError] = useState(null);
   const [gyms, setGyms] = useState([]);
-  const [userData, setUserData] = useState({}); // Añadir estado para userData
+  const [userData, setUserData] = useState({});
   const [selectedTags, setSelectedTags] = useState([{ value: 'Todos', label: 'Todos' }]);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const navigate = useNavigate();
 
   useInitializeData(setGyms, setUserData, setUserPosition, setGeoError);
 
   const handleTagChange = (selectedOptions) => {
     setSelectedTags(selectedOptions || []);
+  };
+
+  const handleGymSelect = (gym) => {
+    navigate('/booking', { state: { gym } });
   };
 
   const filteredGyms = gyms.filter((gym) => {
@@ -60,13 +67,10 @@ const Map = () => {
       {geoError && <div className="geo-error">{geoError}</div>}
       <div className="map-container">
         {filteredGyms.length > 0 ? (
-          <UserLocationMap position={userPosition} gyms={filteredGyms} />
+          <UserLocationMap position={userPosition} gyms={filteredGyms} onSelectGym={handleGymSelect} />
         ) : (
           <div className="no-gyms-message">No se encontraron gimnasios</div>
         )}
-      </div>
-      <div>
-        <button className='booking'>Reservar</button>
       </div>
     </div>
   );

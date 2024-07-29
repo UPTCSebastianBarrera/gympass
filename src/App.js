@@ -3,20 +3,27 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Navigate,
+  Navigate
 } from "react-router-dom";
-import axios from 'axios'; // Import axios
+import axios from "axios";
 import NavBar from "./components/NavBar";
 import UserInfo from "./components/UserInfo";
 import Login from "./pages/Login";
 import Map from "./pages/Map";
 import Market from "./pages/Market";
 import AdminDashboard from "./pages/AdminDashboard";
+import BookingPage from "./pages/BookingPage"; 
 import "./App.css";
 
 const fetchUserDataFromLocalStorage = () => {
-  const storedUserData = localStorage.getItem('userData');
-  return storedUserData ? JSON.parse(storedUserData) : { name: 'Invitado', profilePicture: 'https://via.placeholder.com/50', address: 'N/A' };
+  const storedUserData = localStorage.getItem("userData");
+  return storedUserData
+    ? JSON.parse(storedUserData)
+    : {
+        name: "Invitado",
+        profilePicture: "https://via.placeholder.com/50",
+        address: "N/A",
+      };
 };
 
 const App = () => {
@@ -24,7 +31,6 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Fetch user data from local storage
     const storedUserData = localStorage.getItem("userData");
     if (storedUserData) {
       const parsedUserData = JSON.parse(storedUserData);
@@ -35,37 +41,54 @@ const App = () => {
 
   const handleLoginSubmit = async (emailOrName, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/users/login', { emailOrName, password });
+      const response = await axios.post(
+        "http://localhost:5000/api/users/login",
+        { emailOrName, password }
+      );
       const data = response.data;
-      const isAdmin = data.email === 'administrador@gmail.com';
+      const isAdmin = data.email === "administrador@gmail.com";
       setUserData({ ...data, isAdmin });
       setIsLoggedIn(true);
-      localStorage.setItem('userData', JSON.stringify({ ...data, isAdmin }));
+      localStorage.setItem("userData", JSON.stringify({ ...data, isAdmin }));
     } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
-      alert('Invalid email/name or password');
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+      alert("Invalid email/name or password");
     }
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUserData({ name: 'Invitado', profilePicture: 'https://via.placeholder.com/50', address: 'N/A', isAdmin: false });
-    localStorage.removeItem('userData');
+    setUserData({
+      name: "Invitado",
+      profilePicture: "https://via.placeholder.com/50",
+      address: "N/A",
+      isAdmin: false,
+    });
+    localStorage.removeItem("userData");
   };
 
   const handleRegisterSubmit = async (userDetails) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/users', userDetails);
+      const response = await axios.post(
+        "http://localhost:5000/api/users",
+        userDetails
+      );
       const data = response.data;
       if (response.status === 201) {
-        alert('User registered successfully!');
+        alert("User registered successfully!");
         setUserData(data);
         setIsLoggedIn(true);
-        localStorage.setItem('userData', JSON.stringify(data));
+        localStorage.setItem("userData", JSON.stringify(data));
       }
     } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
-      alert('Error registering user');
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+      alert("Error registering user");
     }
   };
 
@@ -90,12 +113,17 @@ const App = () => {
                 />
               }
             />
-            <Route 
-              path="/admin" 
+            <Route
+              path="/admin"
               element={
-                isLoggedIn && userData.isAdmin ? <AdminDashboard /> : <Navigate to="/account" />
-              } 
+                isLoggedIn && userData.isAdmin ? (
+                  <AdminDashboard />
+                ) : (
+                  <Navigate to="/account" />
+                )
+              }
             />
+            <Route path="/booking" element={<BookingPage />} />
             <Route path="*" element={<Navigate to="/gyms" />} />
           </Routes>
         </div>
