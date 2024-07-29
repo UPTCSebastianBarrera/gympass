@@ -5,7 +5,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://gympass-backend-n2qp86xsy-uptcsebastianbarreras-projects.vercel.app/api/:splat"
+  to = "https://gympass-backend.vercel.app/api/:splat"
   status = 200
   force = true
 
