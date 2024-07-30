@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './Login.css';
 
 const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRegisterSubmit }) => {
@@ -13,8 +12,6 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicPreview, setProfilePicPreview] = useState('https://via.placeholder.com/50');
   const [showPassword, setShowPassword] = useState(false);
-  const [isResettingPassword, setIsResettingPassword] = useState(false);
-  const [resetEmail, setResetEmail] = useState('');
 
   const handleRegisterClick = () => {
     setIsRegistering(true);
@@ -26,7 +23,7 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
     setEmailOrName('');
     setPassword('');
   };
-
+  
   const onRegisterSubmit = (e) => {
     e.preventDefault();
     if (!validatePassword(password)) {
@@ -50,19 +47,6 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
     setConfirmPassword('');
     setProfilePic(null);
     setProfilePicPreview('https://via.placeholder.com/50');
-  };
-
-  const onResetSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/users/reset-password`, { email: resetEmail });
-      alert('Se ha enviado un enlace de recuperación a tu correo.');
-      setResetEmail('');
-      setIsResettingPassword(false);
-    } catch (error) {
-      console.error('Error:', error.response ? error.response.data : error.message);
-      alert('Error al enviar el enlace de recuperación');
-    }
   };
 
   const handleProfilePicChange = (e) => {
@@ -91,52 +75,36 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
     <div className="login-page">
       {!isLoggedIn ? (
         !isRegistering ? (
-          !isResettingPassword ? (
-            <>
-              <form onSubmit={onLoginSubmit}>
+          <>
+            <form onSubmit={onLoginSubmit}>
+              <input
+                className="input-field"
+                type="text"
+                placeholder="Nombre de Usuario o Correo"
+                value={emailOrName}
+                onChange={(e) => setEmailOrName(e.target.value)}
+              />
+              <input
+                className="input-field"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <label className="show-password">
                 <input
-                  className="input-field"
-                  type="text"
-                  placeholder="Nombre de Usuario o Correo"
-                  value={emailOrName}
-                  onChange={(e) => setEmailOrName(e.target.value)}
+                  
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
                 />
-                <input
-                  className="input-field"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder="Contraseña"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <label className="show-password">
-                  <input
-                    type="checkbox"
-                    checked={showPassword}
-                    onChange={() => setShowPassword(!showPassword)}
-                  />
-                  Mostrar Contraseña
-                </label>
-                <button className="login-button" type="submit">Ingresar</button>
-                <button className="register-button" onClick={handleRegisterClick}>Registrarse</button>
-                <a href="#" onClick={() => setIsResettingPassword(true)}>¿Olvidaste tu contraseña?</a>
-              </form>
-            </>
-          ) : (
-            <>
-              <form onSubmit={onResetSubmit}>
-                <input
-                  className="input-field"
-                  type="email"
-                  placeholder="Correo electronico"
-                  value={resetEmail}
-                  onChange={(e) => setResetEmail(e.target.value)}
-                  required
-                />
-                <button className="login-button" type="submit">Enviar enlace de recuperación</button>
-                <button className="register-button" onClick={() => setIsResettingPassword(false)}>Cancelar</button>
-              </form>
-            </>
-          )
+                Mostrar Contraseña
+              </label>
+              <button className="login-button" type="submit">Ingresar</button>
+              <button className="register-button" onClick={handleRegisterClick}>Registrarse</button>
+            </form>
+            
+          </>
         ) : (
           <>
             <div className="register-header">
