@@ -13,15 +13,15 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+      setMessage('Contraseñas no coinciden');
       return;
     }
 
     try {
       await axios.post(`https://gympass-backend.vercel.app/api/users/reset-password/${token}`, { password });
-      setMessage('Password has been reset');
+      setMessage('Contraseña actualizada');
     } catch (error) {
-      setMessage('Error resetting password');
+      setMessage('Error al actualizar contraseña');
     }
   };
 
@@ -30,19 +30,19 @@ const ResetPassword = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="password"
-          placeholder="New Password"
+          placeholder="Nueva contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
         <input
           type="password"
-          placeholder="Confirm New Password"
+          placeholder="Confirmar contraseña"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
         />
-        <button type="submit">Reset Password</button>
+        <button type="submit">Resetear contraseña</button>
       </form>
       {message && <p>{message}</p>}
     </div>
