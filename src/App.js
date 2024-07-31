@@ -43,7 +43,6 @@ const App = () => {
   const handleLoginSubmit = async (emailOrName, password) => {
     try {
       const response = await axios.post(
-        //https://gympass-backend.vercel.app
         "https://gympass-backend.vercel.app/api/users/login",
         { emailOrName, password }
       );
