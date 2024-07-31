@@ -9,6 +9,7 @@ const PasswordRecovery = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // eslint-disable-next-line no-unused-vars
       const response = await axios.post(`https://gympass-backend.vercel.app/api/users/recover`, { email });
       setMessage('Email de recuperacion de contraseña enviado.');
     } catch (error) {
