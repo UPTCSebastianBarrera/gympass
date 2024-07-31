@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+//https://gympass-backend.vercel.app
 const API_URL = 'https://gympass-backend.vercel.app/api/gyms';
 
 export const getGyms = async () => {

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PasswordRecovery from '../components/PasswordRecovery'; // Import the PasswordRecovery component
 import './Login.css';
 
 const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRegisterSubmit }) => {
@@ -12,6 +13,7 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicPreview, setProfilePicPreview] = useState('https://via.placeholder.com/50');
   const [showPassword, setShowPassword] = useState(false);
+  const [isRecoveringPassword, setIsRecoveringPassword] = useState(false); // New state for password recovery
 
   const handleRegisterClick = () => {
     setIsRegistering(true);
@@ -23,7 +25,7 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
     setEmailOrName('');
     setPassword('');
   };
-  
+
   const onRegisterSubmit = (e) => {
     e.preventDefault();
     if (!validatePassword(password)) {
@@ -93,7 +95,6 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
               />
               <label className="show-password">
                 <input
-                  
                   type="checkbox"
                   checked={showPassword}
                   onChange={() => setShowPassword(!showPassword)}
@@ -103,7 +104,8 @@ const Login = ({ isLoggedIn, userData, handleLoginSubmit, handleLogout, handleRe
               <button className="login-button" type="submit">Ingresar</button>
               <button className="register-button" onClick={handleRegisterClick}>Registrarse</button>
             </form>
-            
+            <a href="#!" onClick={() => setIsRecoveringPassword(true)}>¿Olvidaste tu contraseña?</a> {/* Link for password recovery */}
+            {isRecoveringPassword && <PasswordRecovery onClose={() => setIsRecoveringPassword(false)} />}
           </>
         ) : (
           <>

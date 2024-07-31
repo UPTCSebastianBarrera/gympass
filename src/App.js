@@ -13,6 +13,7 @@ import Map from "./pages/Map";
 import Market from "./pages/Market";
 import AdminDashboard from "./pages/AdminDashboard";
 import BookingPage from "./pages/BookingPage"; 
+import ResetPassword from "./pages/ResetPassword"; // Import the ResetPassword component
 import "./App.css";
 
 const fetchUserDataFromLocalStorage = () => {
@@ -42,6 +43,7 @@ const App = () => {
   const handleLoginSubmit = async (emailOrName, password) => {
     try {
       const response = await axios.post(
+        //https://gympass-backend.vercel.app
         "https://gympass-backend.vercel.app/api/users/login",
         { emailOrName, password }
       );
@@ -124,6 +126,7 @@ const App = () => {
               }
             />
             <Route path="/booking" element={<BookingPage />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} /> {/* Add this route */}
             <Route path="*" element={<Navigate to="/gyms" />} />
           </Routes>
         </div>

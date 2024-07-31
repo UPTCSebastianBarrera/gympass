@@ -10,6 +10,7 @@ const Market = () => {
 
   useEffect(() => {
     const fetchSupplements = async () => {
+      //https://gympass-backend.vercel.app
       const { data } = await axios.get('https://gympass-backend.vercel.app/api/supplements');
       setSupplements(data);
     };
