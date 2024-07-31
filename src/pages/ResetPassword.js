@@ -18,7 +18,7 @@ const ResetPassword = () => {
     }
 
     try {
-      await axios.post(`https://gympass-backend.vercel.app/api/users/reset-password/${token}`, { password });
+      await axios.post(`https://gympass-backend.vercel.app/reset-password/${token}`, { password });
       setMessage('Password has been reset');
     } catch (error) {
       setMessage('Error resetting password');
